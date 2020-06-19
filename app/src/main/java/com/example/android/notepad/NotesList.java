@@ -27,6 +27,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -71,6 +72,7 @@ public class NotesList extends ListActivity {
             NotePad.Notes._ID, // 0
             NotePad.Notes.COLUMN_NAME_TITLE, // 1
             NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE, // 2
+            NotePad.Notes.COLUMN_NAME_BACK_COLOR,
     };
 
     /** The index of the title column */
@@ -137,9 +139,9 @@ public class NotesList extends ListActivity {
 
         // Creates the backing adapter for the ListView.
         SimpleCursorAdapter adapter
-            = new SimpleCursorAdapter(
+            = new MyCursorAdapter(
                       this,                             // The Context for the ListView
-                      R.layout.noteslist_item,          // Points to the XML for a list item
+                      R.layout.noteslist_item_test,          // Points to the XML for a list item
                       cursor,                           // The cursor to get items from
                       dataColumns,
                       viewIDs
@@ -159,6 +161,7 @@ public class NotesList extends ListActivity {
                 return false;
             }
         });
+
         // Sets the ListView's adapter to be the cursor adapter that was just created.
         setListAdapter(adapter);
     }

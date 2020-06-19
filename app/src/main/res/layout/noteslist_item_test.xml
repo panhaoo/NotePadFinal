@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:showDividers="none"
+    >
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/titlle_style"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginBottom="6dp"
+        android:showDividers="none">
+
+        <TextView
+            android:id="@android:id/text1"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:text="你好"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        <TextView
+            android:id="@android:id/text2"
+            android:layout_width="320dp"
+            android:layout_height="25dp"
+            android:paddingLeft="5dp"
+            android:text="2020/5/24"
+            android:textSize="15dp" />
+    </LinearLayout>
+</LinearLayout>
