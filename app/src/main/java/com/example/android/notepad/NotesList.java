@@ -46,6 +46,12 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatCallback;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.view.ActionMode;
+import androidx.appcompat.widget.Toolbar;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -78,17 +84,41 @@ public class NotesList extends ListActivity {
     /** The index of the title column */
     private static final int COLUMN_INDEX_TITLE = 1;
 
-    FloatingActionButton fab;
-
     /**
      * onCreate is called when Android starts this Activity from scratch.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.noteslist);
+        //setContentView(R.layout.noteslist);
         // The user does not need to hold down the key to use menu shortcuts.
-        setDefaultKeyMode(DEFAULT_KEYS_SHORTCUT);
+        //setDefaultKeyMode(DEFAULT_KEYS_SHORTCUT);
+
+        AppCompatCallback callback = new AppCompatCallback() {
+            @Override
+            public void onSupportActionModeStarted(ActionMode mode) {
+
+            }
+
+            @Override
+            public void onSupportActionModeFinished(ActionMode mode) {
+
+            }
+
+            @Nullable
+            @Override
+            public ActionMode onWindowStartingSupportActionMode(ActionMode.Callback callback) {
+                return null;
+            }
+        };
+
+        AppCompatDelegate delegate = AppCompatDelegate.create(this, callback);
+        delegate.onCreate(savedInstanceState);
+        delegate.setContentView(R.layout.noteslist);
+
+        Toolbar mToolbar = findViewById(R.id.toolbar);
+        delegate.setSupportActionBar(mToolbar);
+
         /* If no data is given in the Intent that started this Activity, then this Activity
          * was started when the intent filter matched a MAIN action. We should use the default
          * provider URI.

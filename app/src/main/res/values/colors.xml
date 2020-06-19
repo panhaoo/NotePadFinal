@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#0099FF</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#32CD32</color>
     <color name="white">#ffffff</color><!--白色 -->
     <color name="ivory">#fffff0</color><!--象牙色 -->
     <color name="lightyellow">#ffffe0</color><!--亮黄色 -->
@@ -151,4 +151,6 @@
     <color name="black">#000000</color><!--黑色 -->
     <color name="transparent">#0000</color><!-- 透明 -->
     <color name="transparent2">#8000</color><!-- 透明 -->
+    <color name="fsk_green">#00FF00</color>
+    <color name="fsk_base_bg">#808080</color>
 </resources>
