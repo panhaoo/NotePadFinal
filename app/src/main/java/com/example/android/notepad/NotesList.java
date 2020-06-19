@@ -16,7 +16,11 @@
 
 package com.example.android.notepad;
 
+<<<<<<< HEAD
 import com.example.android.notepad.NotePad;
+=======
+
+>>>>>>> d4a022a... 导入功能“
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import android.app.ListActivity;

@@ -472,6 +472,13 @@ public class NoteEditor extends Activity {
             deleteNote();
             finish();
             break;
+<<<<<<< HEAD
+=======
+        //导出笔记选项
+        case R.id.menu_output:
+            outputNote();
+            break;
+>>>>>>> d4a022a... 导入功能“
         case R.id.menu_revert:
             cancelNote();
             break;
@@ -651,4 +658,13 @@ public class NoteEditor extends Activity {
             mText.setText("");
         }
     }
+<<<<<<< HEAD
+=======
+    //跳转导出笔记的activity，将uri信息传到新的activity
+    private final void outputNote() {
+        Intent intent = new Intent(null,mUri);
+        intent.setClass(NoteEditor.this,OutputText.class);
+        NoteEditor.this.startActivity(intent);
+    }
+>>>>>>> d4a022a... 导入功能“
 }

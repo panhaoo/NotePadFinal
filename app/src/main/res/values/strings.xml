@@ -30,6 +30,10 @@
     <string name="menu_revert">Revert changes</string>
     <string name="menu_copy">Copy</string>
     <string name="menu_paste">Paste</string>
+<<<<<<< HEAD
+=======
+    <string name="menu_output">Output</string>
+>>>>>>> d4a022a... 导入功能“
 
     <string name="button_ok">OK</string>
     <string name="text_title">Title:</string>
@@ -40,4 +44,9 @@
     <string name="error_title">Error</string>
     <string name="error_message">Error loading note</string>
     <string name="nothing_to_save">There is nothing to save</string>
+<<<<<<< HEAD
+=======
+    <string name="output_ok">Ok</string>
+    <string name="output_name">output</string>
+>>>>>>> d4a022a... 导入功能“
 </resources>
