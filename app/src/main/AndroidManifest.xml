@@ -20,10 +20,6 @@
      own application, the package name must be changed from "com.example.*"
      to come from a domain that you own or have control over. -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-<<<<<<< HEAD
-=======
-    xmlns:tools="http://schemas.android.com/tools"
->>>>>>> d4a022a... 导入功能“
     package="com.example.android.notepad" >
 
     <application android:icon="@drawable/app_notes"
@@ -34,27 +30,13 @@
             android:exported="false">
             <grant-uri-permission android:pathPattern=".*" />
         </provider>
-<<<<<<< HEAD
-=======
-        <!--添加导出activity-->
-        <activity android:name="OutputText"
-            android:label="@string/output_name"
-            android:theme="@android:style/Theme.Holo.Dialog"
-            android:windowSoftInputMode="stateVisible">
-        </activity>
->>>>>>> d4a022a... 导入功能“
 
         <activity android:name="NotesList" android:label="@string/title_notes_list" android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-<<<<<<< HEAD
             <intent-filter>
-=======
-            <intent-filter android:scheme="http"
-                tools:ignore="AppLinkUrlError">
->>>>>>> d4a022a... 导入功能“
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.EDIT" />
                 <action android:name="android.intent.action.PICK" />
@@ -75,13 +57,7 @@
             >
             <!-- This filter says that we can view or edit the data of
                  a single note -->
-<<<<<<< HEAD
             <intent-filter android:label="@string/resolve_edit">
-=======
-            <intent-filter android:label="@string/resolve_edit"
-                android:scheme="http"
-                tools:ignore="AppLinkUrlError">
->>>>>>> d4a022a... 导入功能“
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.EDIT" />
                 <action android:name="com.android.notepad.action.EDIT_NOTE" />
@@ -106,12 +82,7 @@
             android:label="@string/title_edit_title"
             android:icon="@drawable/ic_menu_edit"
             android:theme="@android:style/Theme.Holo.Dialog"
-<<<<<<< HEAD
             android:windowSoftInputMode="stateVisible">
-=======
-            android:windowSoftInputMode="stateVisible"
-            tools:ignore="MissingClass">
->>>>>>> d4a022a... 导入功能“
             <!-- This activity implements an alternative action that can be
                  performed on notes: editing their title.  It can be used as
                  a default operation if the user invokes this action, and is
@@ -141,26 +112,24 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <!--添加导出activity-->
+        <activity android:name="OutputText"
+            android:label="@string/output_name"
+            android:theme="@android:style/Theme.Holo.Dialog"
+            android:windowSoftInputMode="stateVisible">
+        </activity>
+
+
         <!--换背景色-->
         <activity android:name="NoteColor"
             android:theme="@android:style/Theme.Holo.Light.Dialog"
             android:label="ChangeColor"
             android:windowSoftInputMode="stateVisible"/>
-<<<<<<< HEAD
     </application>
 
-</manifest>
-=======
-
-
-
-        android:requestLegacyExternalStorage="true"
-    </application>
     <!-- 在SD卡中创建与删除文件权限 -->
-    <permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
     <!-- 向SD卡写入数据权限 -->
-    <permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 </manifest>
-
->>>>>>> d4a022a... 导入功能“

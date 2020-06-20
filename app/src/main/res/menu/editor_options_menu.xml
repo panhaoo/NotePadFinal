@@ -17,9 +17,8 @@
         android:title="Color"
         android:icon="@drawable/ic_clothe"
         android:showAsAction="always"/>
-<<<<<<< HEAD
-=======
+
     <item android:id="@+id/menu_output"
         android:title="@string/menu_output" />
->>>>>>> d4a022a... 导入功能“
+
 </menu>
