@@ -1,12 +1,21 @@
 package com.example.android.notepad;
+import android.Manifest;
 import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.os.Environment;
 import android.widget.Toast;
+
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
@@ -94,28 +103,75 @@ public class OutputText extends Activity {
 
     private void write()
     {
-        try
-        {
-            // 如果手机插入了SD卡，而且应用程序具有访问SD的权限
-            if (Environment.getExternalStorageState().equals(
-                    Environment.MEDIA_MOUNTED)) {
-                // 获取SD卡的目录
-                File sdCardDir = Environment.getExternalStorageDirectory();
-                //创建文件目录
-                File targetFile = new File(sdCardDir.getCanonicalPath() + "/" + mName.getText() + ".txt");
-                //写文件
-                PrintWriter ps = new PrintWriter(new OutputStreamWriter(new FileOutputStream(targetFile), "UTF-8"));
-                ps.println(TITLE);
-                ps.println(NOTE);
-                ps.println("创建时间：" + CREATE_DATE);
-                ps.println("最后一次修改时间：" + MODIFICATION_DATE);
-                ps.close();
-                Toast.makeText(this, "保存成功,保存位置：" + sdCardDir.getCanonicalPath() + "/" + mName.getText() + ".txt", Toast.LENGTH_LONG).show();
+        int permission_write=ContextCompat.checkSelfPermission(OutputText.this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int permission_read=ContextCompat.checkSelfPermission(OutputText.this,
+                Manifest.permission.READ_EXTERNAL_STORAGE);
+        if(permission_write!= PackageManager.PERMISSION_GRANTED
+                || permission_read!=PackageManager.PERMISSION_GRANTED){
+            Toast.makeText(this, "正在请求权限", Toast.LENGTH_SHORT).show();
+
+            //申请权限，特征码自定义为1，可在回调时进行相关判断
+
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE },1);
+
+
+            Toast.makeText(this, "结束", Toast.LENGTH_SHORT).show();
+            try
+            {
+                // 如果手机插入了SD卡，而且应用程序具有访问SD的权限
+                if (Environment.getExternalStorageState().equals(
+                        Environment.MEDIA_MOUNTED)) {
+                    // 获取SD卡的目录
+                    File sdCardDir = Environment.getExternalStorageDirectory();
+                    //创建文件目录
+                    File targetFile = new File(sdCardDir.getCanonicalPath() + "/" + mName.getText() + ".txt");
+                    //写文件
+                    PrintWriter ps = new PrintWriter(new OutputStreamWriter(new FileOutputStream(targetFile), "UTF-8"));
+                    ps.println(TITLE);
+                    ps.println(NOTE);
+                    ps.println("创建时间：" + CREATE_DATE);
+                    ps.println("最后一次修改时间：" + MODIFICATION_DATE);
+                    ps.close();
+                    Toast.makeText(this, "保存成功,保存位置：" + sdCardDir.getCanonicalPath() + "/" + mName.getText() + ".txt", Toast.LENGTH_LONG).show();
+                }
             }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
+
         }
-        catch (Exception e)
-        {
-            e.printStackTrace();
+
+
+
+    }
+
+
+    //获取权限重写方法，其中常量1是申请权限时填入的特征码
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        Toast.makeText(this, "11111111111", Toast.LENGTH_SHORT).show();
+        switch (requestCode){
+            case 1:
+                if(grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                    //权限已成功申请
+                    Toast.makeText(this, "22222222", Toast.LENGTH_SHORT).show();
+                    //
+                }else{
+                    Toast.makeText(this, "333333333", Toast.LENGTH_SHORT).show();
+                    //用户拒绝授权
+                    Toast.makeText(this, "无法获取SD卡读写权限", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
+
+
+
+
 }
