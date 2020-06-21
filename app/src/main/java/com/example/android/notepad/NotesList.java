@@ -18,8 +18,13 @@ package com.example.android.notepad;
 
 
 
+import com.baidu.speech.EventListener;
+import com.baidu.speech.EventManager;
+import com.baidu.speech.EventManagerFactory;
+import com.baidu.speech.asr.SpeechConstant;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import android.Manifest;
 import android.app.ListActivity;
 import android.content.ClipboardManager;
 import android.content.ClipData;
@@ -27,6 +32,7 @@ import android.content.ComponentName;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
@@ -41,6 +47,8 @@ import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SimpleCursorAdapter;
@@ -52,10 +60,18 @@ import androidx.appcompat.app.AppCompatCallback;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.view.ActionMode;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Displays a list of notes. Will display notes from the {@link Uri}
@@ -67,10 +83,17 @@ import java.util.Date;
  * application should use the {@link android.content.AsyncQueryHandler} or
  * {@link android.os.AsyncTask} object to perform operations asynchronously on a separate thread.
  */
-public class NotesList extends ListActivity {
+public class NotesList extends ListActivity implements EventListener {
 
     // For logging and debugging
     private static final String TAG = "NotesList";
+
+    // 设置事件管理器
+    private EventManager asr;
+    //识别结果
+    private String Result;
+    //搜索框
+    private EditText editText;
 
     /**
      * The columns needed by the cursor adapter
@@ -228,55 +251,109 @@ public class NotesList extends ListActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+
+    /*
+     *基于sdk集成1.2 自定义输出事件类
+     *EventListener 回调方法
+     */
+    EventListener myListener = new EventListener(){
+        @Override
+        public void onEvent(String name, String params, byte[] data, int offset, int length) {
+            if (SpeechConstant.CALLBACK_EVENT_ASR_PARTIAL.equals(name)){
+                // 识别相关的结果都在这里CALLBACK_EVENT_ASR_PARTIAL
+                try {
+                    // 结果类型result_type(临时结果partial_result，最终结果final_result)
+                    // best_result最佳结果参数
+                    JSONObject object = new JSONObject(params);
+                    String result = object.getString("best_result");
+                    String resultType = object.getString("result_type");
+                    // 判断识别是否结束
+                    if ("final_result".equals(resultType)){
+                        Result=result;
+                        editText.setText(Result);
+                        Toast toast = Toast.makeText(getApplicationContext(),"识别结束",Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    };
+
+    /**
+     * android 6.0 以上需要动态申请权限
+     */
+    private void initPermission() {
+        String permissions[] = {android.Manifest.permission.RECORD_AUDIO,
+                android.Manifest.permission.ACCESS_NETWORK_STATE,
+                android.Manifest.permission.INTERNET,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+        };
+
+        ArrayList<String> toApplyList = new ArrayList<String>();
+
+        for (String perm : permissions) {
+            if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(this, perm)) {
+                toApplyList.add(perm);
+                // 进入到这里代表没有权限.
+
+            }
+        }
+        String tmpList[] = new String[toApplyList.size()];
+        if (!toApplyList.isEmpty()) {
+            ActivityCompat.requestPermissions(this, toApplyList.toArray(tmpList), 123);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        // 此处为android 6.0以上动态授权的回调，用户自行实现。
+    }
+
+    /**
+     * 基于SDK集成2.2 发送开始事件
+     * 点击开始按钮
+     */
+    private void start(){
+        Map<String, Object> params = new LinkedHashMap<String, Object>();
+        // 基于SDK集成2.1 设置识别参数
+        params.put(SpeechConstant.ACCEPT_AUDIO_VOLUME, false);
+        String json = null; // 可以替换成自己的json
+        json = new JSONObject(params).toString(); // 这里可以替换成你需要测试的json
+        // 基于SDK集成2.2 发送start开始事件
+        asr.send(SpeechConstant.ASR_START, json, null, 0, 0);
+    }
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
 
         final SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
-        searchView.setSubmitButtonEnabled(true);
-        searchView.setQueryHint("search");
+        searchView.setIconifiedByDefault(true);
+        searchView.setSubmitButtonEnabled(true);   //增加提交按钮
+        //searchView.setQueryHint("Search...");
+
+        int id = searchView.getContext().getResources().getIdentifier("android:id/search_src_text",null,null);
+        editText = (EditText) searchView.findViewById(id);
+        editText.setText("Search...");   //搜索内容
+
+        int imgId = searchView.getContext().getResources().getIdentifier("android:id/search_go_btn",null,null);
+        ImageView search_go_btn = (ImageView) searchView.findViewById(imgId);
+        search_go_btn.setImageResource(R.drawable.ic_menu_voice);   //提交图标更改
+
+        //搜索框文字变化监听
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                String selection = NotePad.Notes.COLUMN_NAME_TITLE + " Like ? ";
-                String[] selectionArgs = { query };
-                Cursor cursor = managedQuery(
-                        getIntent().getData(),
-                        PROJECTION,
-                        selection,
-                        selectionArgs,
-                        NotePad.Notes.DEFAULT_SORT_ORDER
-                );
-                if(cursor.getCount() == 0){
-                    Toast.makeText(getApplicationContext(), "未搜索到相关内容！", Toast.LENGTH_SHORT).show();
-                }
-                String[] dataColumns = { NotePad.Notes.COLUMN_NAME_TITLE, NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE };
-                int[] viewIDs = { android.R.id.text1, android.R.id.text2 };
-                SimpleCursorAdapter adapter
-                        = new SimpleCursorAdapter(
-                        getApplicationContext(),
-                        R.layout.noteslist_item,
-                        cursor,
-                        dataColumns,
-                        viewIDs
-                );
-                adapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
-                    @Override
-                    public boolean setViewValue(View view, Cursor cursor, int column) {
-                        if( column == 2 ){
-                            TextView time = (TextView) view;
-                            Calendar c = Calendar.getInstance();
-                            long millions = cursor.getLong(cursor.getColumnIndex(NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE));
-                            c.setTimeInMillis(millions);
-                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                            time.setText(sdf.format(c.getTime()));
-                            return true;
-                        }
-                        return false;
-                    }
-                });
-                setListAdapter(adapter);
-                searchView.clearFocus();
+                initPermission();
+                // 基于sdk集成1.1 初始化EventManager对象
+                asr = EventManagerFactory.create(getApplicationContext(), "asr");
+                // 基于sdk集成1.3 注册自己的输出事件类
+                asr.registerListener(myListener);
+                Toast toast = Toast.makeText(getApplicationContext(),"识别开始",Toast.LENGTH_LONG);
+                toast.show();
+                start();
                 return true;
             }
 
@@ -613,5 +690,10 @@ public class NotesList extends ListActivity {
             // Intent's data is the note ID URI. The effect is to call NoteEdit.
             startActivity(new Intent(Intent.ACTION_EDIT, uri));
         }
+    }
+
+    @Override
+    public void onEvent(String s, String s1, byte[] bytes, int i, int i1) {
+
     }
 }
