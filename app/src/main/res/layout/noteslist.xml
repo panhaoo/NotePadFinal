@@ -18,6 +18,7 @@
             android:id="@android:id/list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:layout_marginTop="60dp" />
 
         <com.google.android.material.navigation.NavigationView
@@ -26,6 +27,7 @@
             android:layout_marginTop="60dp"
             android:layout_height="match_parent"
             android:layout_gravity="start"
+            android:background="@color/white"
             app:menu="@menu/navigation_menu">
 
         </com.google.android.material.navigation.NavigationView>
@@ -38,6 +40,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        app:navigationIcon="@drawable/ic_navigation"
         android:background="@color/colorPrimary"
         app:layout_constraintTop_toTopOf="parent"
         app:title="NotePad"
@@ -52,11 +55,11 @@
         android:clickable="true"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp"
-        app:backgroundTint="#66CCFF"
-        app:rippleColor="#0066FF"
+        app:backgroundTint="@color/dodgerblue"
+        app:rippleColor="@color/lightseagreen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:src="@drawable/ic_menu_compose"
+        android:src="@android:drawable/ic_input_add"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

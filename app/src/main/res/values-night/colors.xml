@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#0099FF</color>
+    <color name="colorPrimary">#808080</color>
     <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#32CD32</color>
-    <color name="white">#ffffff</color><!--白色 -->
+    <color name="colorAccent">#808080</color>
+    <color name="white">#808080</color><!--白色 -->
     <color name="ivory">#fffff0</color><!--象牙色 -->
     <color name="lightyellow">#ffffe0</color><!--亮黄色 -->
     <color name="yellow">#ffff00</color><!--黄色 -->
@@ -130,8 +130,8 @@
     <color name="darkslategrey">#2f4f4f</color><!--暗瓦灰色 -->
     <color name="seagreen">#2e8b57</color><!--海绿色 -->
     <color name="forestgreen">#228b22</color><!--森林绿 -->
-    <color name="lightseagreen">#20b2aa</color><!--亮海蓝色 -->
-    <color name="dodgerblue">#1e90ff</color><!--闪兰色 -->
+    <color name="lightseagreen">#808080</color><!--亮海蓝色 -->
+    <color name="dodgerblue">#808080</color><!--闪兰色 -->
     <color name="midnightblue">#191970</color><!--中灰兰色 -->
     <color name="aqua">#00ffff</color><!--浅绿色 -->
     <color name="cyan">#00ffff</color><!--青色 -->
@@ -139,18 +139,18 @@
     <color name="lime">#00ff00</color><!--酸橙色 -->
     <color name="mediumspringgreen">#00fa9a</color><!--中春绿色 -->
     <color name="darkturquoise">#00ced1</color><!--暗宝石绿 -->
-    <color name="deepskyblue">#00bfff</color><!--深天蓝色 -->
-    <color name="darkcyan">#008b8b</color><!--暗青色 -->
-    <color name="teal">#008080</color><!--水鸭色 -->
-    <color name="green">#008000</color><!--绿色 -->
-    <color name="darkgreen">#006400</color><!--暗绿色 -->
-    <color name="blue">#0000ff</color><!--蓝色 -->
-    <color name="mediumblue">#0000cd</color><!--中兰色 -->
-    <color name="darkblue">#00008b</color><!--暗蓝色 -->
-    <color name="navy">#000080</color><!--海军色 -->
-    <color name="black">#000000</color><!--黑色 -->
-    <color name="transparent">#0000</color><!-- 透明 -->
-    <color name="transparent2">#8000</color><!-- 透明 -->
+    <color name="deepskyblue">#808080</color><!--深天蓝色 -->
+    <color name="darkcyan">#808080</color><!--暗青色 -->
+    <color name="teal">#808080</color><!--水鸭色 -->
+    <color name="green">#808080</color><!--绿色 -->
+    <color name="darkgreen">#808080</color><!--暗绿色 -->
+    <color name="blue">#808080</color><!--蓝色 -->
+    <color name="mediumblue">#808080</color><!--中兰色 -->
+    <color name="darkblue">#808080</color><!--暗蓝色 -->
+    <color name="navy">#808080</color><!--海军色 -->
+    <color name="black">#808080</color><!--黑色 -->
+    <color name="transparent">#808080</color><!-- 透明 -->
+    <color name="transparent2">#808080</color><!-- 透明 -->
     <color name="fsk_green">#00FF00</color>
     <color name="fsk_base_bg">#808080</color>
 </resources>

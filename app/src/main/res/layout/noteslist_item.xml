@@ -24,6 +24,7 @@
         android:gravity="center_vertical"
         android:paddingLeft="5dp"
         android:text="你好"
+        android:textColor="@color/black"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
@@ -31,6 +32,7 @@
         android:layout_width="320dp"
         android:layout_height="25dp"
         android:paddingLeft="5dp"
+        android:textColor="@color/black"
         android:text="2020/5/24"
         android:textSize="15dp" />
 

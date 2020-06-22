@@ -6,8 +6,9 @@
 
     <group>
         <item
-            android:id="@+id/single_1"
+            android:id="@+id/night_item"
             app:actionLayout="@layout/item_layout"
+            android:icon="@drawable/ic_night"
             android:title="" />
     </group>
 </menu>
