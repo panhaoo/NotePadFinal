@@ -117,7 +117,6 @@ public class NotesList extends ListActivity implements EventListener {
         //setContentView(R.layout.noteslist);
         // The user does not need to hold down the key to use menu shortcuts.
         //setDefaultKeyMode(DEFAULT_KEYS_SHORTCUT);
-
         AppCompatCallback callback = new AppCompatCallback() {
             @Override
             public void onSupportActionModeStarted(ActionMode mode) {
@@ -270,6 +269,7 @@ public class NotesList extends ListActivity implements EventListener {
                     // 判断识别是否结束
                     if ("final_result".equals(resultType)){
                         Result=result;
+                        Result = Result.substring(0,Result.length()-1);  //删除结果最后符号
                         editText.setText(Result);
                         Toast toast = Toast.makeText(getApplicationContext(),"识别结束",Toast.LENGTH_SHORT);
                         toast.show();
@@ -346,6 +346,7 @@ public class NotesList extends ListActivity implements EventListener {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                editText.setText("Search...");
                 initPermission();
                 // 基于sdk集成1.1 初始化EventManager对象
                 asr = EventManagerFactory.create(getApplicationContext(), "asr");
